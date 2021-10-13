@@ -9,9 +9,14 @@ class IExtensionManager(metaclass=ABCMeta):  # 介面
 
 
 class LogAnalyzer:
+    __manager: IExtensionManager
+
+    def __init__(self, mgr: IExtensionManager): # 建構式注入
+        self.__manager = mgr
+        pass
+
     def isValidLogFileName(self, fileName):
-        mgr = FileExtensionManager()
-        return mgr.isValid(fileName)
+        return self.__manager.isValid(fileName)
 
 
 class FileExtensionManager(IExtensionManager):  # 繼承
