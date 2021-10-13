@@ -1,4 +1,4 @@
-from LogAnalyzer import FileExtensionManager, LogAnalyzer
+from LogAnalyzer import ExtensionManagerFactory, FileExtensionManager, LogAnalyzer
 
 
 class FakeExtensionManager(FileExtensionManager):  # 命名為 Fake 開頭, 不容易讓人混淆
@@ -13,8 +13,10 @@ class FakeExtensionManager(FileExtensionManager):  # 命名為 Fake 開頭, 不�
 class TestLogAnalyzer:
     def test_IsValidLogFileName_NameSupportedExtension_ReturnTrue(self):
         fakeMgr = FakeExtensionManager()
-        fakeMgr.willBeValid = False
+        fakeMgr.willBeValid = True
+        factory = ExtensionManagerFactory()
+        factory.setManager(fakeMgr)
         log = LogAnalyzer()
-        log.manager = fakeMgr
+        log.manager = factory.create()
         result = log.isValidLogFileName("short.ext")
         assert result == True
