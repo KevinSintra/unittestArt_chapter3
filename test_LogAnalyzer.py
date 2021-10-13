@@ -1,7 +1,7 @@
 from LogAnalyzer import FileExtensionManager, LogAnalyzer
 
 
-class FakeExtensionManager(FileExtensionManager): # 命名為 Fake 開頭, 不容易讓人混淆
+class FakeExtensionManager(FileExtensionManager):  # 命名為 Fake 開頭, 不容易讓人混淆
     '''假物件最好放在對應的測試底下'''
     willBeValid = False
 
@@ -13,7 +13,8 @@ class FakeExtensionManager(FileExtensionManager): # 命名為 Fake 開頭, 不�
 class TestLogAnalyzer:
     def test_IsValidLogFileName_NameSupportedExtension_ReturnTrue(self):
         fakeMgr = FakeExtensionManager()
-        fakeMgr.willBeValid = True
-        log = LogAnalyzer(fakeMgr)
+        fakeMgr.willBeValid = False
+        log = LogAnalyzer()
+        log.manager = fakeMgr
         result = log.isValidLogFileName("short.ext")
         assert result == True

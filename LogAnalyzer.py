@@ -11,12 +11,21 @@ class IExtensionManager(metaclass=ABCMeta):  # 介面
 class LogAnalyzer:
     __manager: IExtensionManager
 
-    def __init__(self, mgr: IExtensionManager): # 建構式注入
-        self.__manager = mgr
+    def __init__(self):
+        self.__manager = FileExtensionManager()
         pass
 
     def isValidLogFileName(self, fileName):
         return self.__manager.isValid(fileName)
+
+    @property
+    def manager(self):  # getter
+        return self.__manager
+
+    @manager.setter
+    def manager(self, mgr: IExtensionManager):  # setter
+        self.__manager = mgr
+        pass
 
 
 class FileExtensionManager(IExtensionManager):  # 繼承
